@@ -27,7 +27,7 @@ export type ModalProviderProperties = {
 
 // For Modal Context
 export type ModalContextValues = {
-	rendering: React.CSSProperties
+	positioning: Coordinates
 	layer: HTMLDivElement
 	opened: boolean
 	open: Thunk
@@ -40,7 +40,7 @@ export type ModalContextValues = {
 export type ModalHeaderProperties = {
 	title?: string
 	desc?: string
-	icon?: { icon: Icon, className: React.SVGAttributes<SVGSVGElement>['className'] }
+	icon?: { icon: Icon, className?: React.SVGAttributes<SVGSVGElement>['className'] }
 }
 export type ModalComponent = React.FC<ModalProviderProperties> & {
 	Trigger: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children'>>

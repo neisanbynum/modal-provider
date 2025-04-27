@@ -25,8 +25,8 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 		iconContainer: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
 		separator: { display: 'flex', width: 0, height: '100%', outline: '1px solid' },
 		content: { display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'start' },
-		icon: { width: '2rem', height: '2rem' },
-		title: { fontSize: '1.5rem', fontWeight: 'bold' },
+		icon: { width: '1rem', height: '1rem' },
+		title: { fontSize: '1.25rem', fontWeight: 'bold' },
 		desc: { fontSize: '1rem' }
 	}
 
@@ -54,7 +54,7 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 }
 
 const Content: typeof Modal.Content = ({ children, className, style, icon, title, desc }) => {
-	const { rendering, layer, modal } = useModalContext()
+	const { positioning, opened, layer, modal } = useModalContext()
 
 	const CardStyle: typeof style = {
 		display: 'flex',
@@ -62,12 +62,15 @@ const Content: typeof Modal.Content = ({ children, className, style, icon, title
 		width: 'fit-content',
 		borderRadius: '1rem',
 		border: '2px solid',
+		position: 'fixed',
+		zIndex: 100,
+		opacity: opened ? 1 : 0,
 		...style,
-		...rendering
+		...positioning
 	}
 
 	return createPortal(
-		<div className={className} style={CardStyle} ref={modal} slot='card'>
+		<div className={className} style={CardStyle} ref={modal} inert={!opened} aria-hidden={!opened} slot='card'>
 			<Header icon={icon} title={title} desc={desc} />
 			{children}
 		</div>,

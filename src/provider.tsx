@@ -1,6 +1,6 @@
 import { usePortalLayer } from 'portal-layer'
 import React from 'react'
-import { ModalProviderProperties } from './types'
+import { Coordinates, ModalProviderProperties } from './types'
 import ModalPositioner from './positioner'
 import { ModalContext } from './context'
 
@@ -12,10 +12,9 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 	options
 }) => {
 	const layer = usePortalLayer()
-	const portal = React.useRef<HTMLDivElement>(null)
 
 	const [opened, setOpened] = React.useState<boolean>(manuallyOpened ?? false)
-	const [rendering, setRendering] = React.useState<React.CSSProperties>({})
+	const [positioning, setPositioning] = React.useState<Coordinates>({ top: 0, left: 0 })
 
 	React.useEffect(() => {
 		if (manuallyOpened) open()
@@ -23,26 +22,10 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 
 	const open = () => {
 		layer.style.background = 'rgba(0, 0, 0, 0.5)'
-
-		const node = portal.current
-		if (node) {
-			node.inert = false
-			node.ariaHidden = 'false'
-			setRendering({ ...rendering, opacity: 1 })
-		}
-
 		setOpened(true)
 	}
 	const close = () => {
 		layer.style.background = 'transparent'
-
-		const node = portal.current
-		if (node) {
-			node.inert = true
-			node.ariaHidden = 'true'
-			setRendering({ ...rendering, opacity: 0 })
-		}
-
 		setOpened(false)
 	}
 
@@ -64,19 +47,12 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 	const modal = React.useCallback((node: HTMLDivElement) => {
 		if (!node) return
 
-		portal.current = node
-
-		const update = () => {
-			const position = positioner.position(node.getBoundingClientRect())
-
-			setRendering({ ...rendering, position: 'fixed', top: position.top, left: position.left })
-		}
+		const update = () => setPositioning(positioner.position(node.getBoundingClientRect()))
 
 		const handleRootClick = (e: MouseEvent) => {
 			if (closer !== 'button' && closer !== 'none' && e.target === layer) close()
 		}
 
-		close()
 		update()
 
 		layer.addEventListener('click', handleRootClick)
@@ -93,7 +69,11 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 		}
 	}, [])
 
-	return <ModalContext.Provider value={{ rendering, layer, opened, open, close, trigger, modal }}>{children}</ModalContext.Provider>
+	return (
+		<ModalContext.Provider value={{ positioning, layer, opened, open, close, trigger, modal }}>
+			{children}
+		</ModalContext.Provider>
+	)
 }
 ModalProvider.displayName = 'ModalProvider'
 

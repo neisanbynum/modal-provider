@@ -27,6 +27,7 @@ export type ModalProviderProperties = {
 
 // For Modal Context
 export type ModalContextValues = {
+	rendering: React.CSSProperties
 	layer: HTMLDivElement
 	opened: boolean
 	open: Thunk

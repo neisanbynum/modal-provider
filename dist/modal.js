@@ -38,8 +38,8 @@ const Header = ({ icon, title, desc }) => {
     return (_jsxs("div", { style: styles.header, children: [icon && (_jsxs(_Fragment, { children: [_jsx("div", { style: styles.iconContainer, children: _jsx(icon.icon, { className: icon.className, style: styles.icon }) }), _jsx("div", { style: styles.separator })] })), _jsxs("div", { style: styles.content, children: [title && _jsx("span", { style: styles.title, children: title }), desc && _jsx("span", { style: styles.desc, children: desc })] }), _jsx("div", { style: styles.iconContainer, children: _jsx("button", { onClick: close, children: _jsx(X, { style: styles.icon }) }) })] }));
 };
 const Content = ({ children, className, style, icon, title, desc }) => {
-    const { layer, modal } = useModalContext();
-    const CardStyle = Object.assign({ display: 'flex', flexDirection: 'column', width: 'fit-content', borderRadius: '1rem', border: '2px solid' }, style);
+    const { rendering, layer, modal } = useModalContext();
+    const CardStyle = Object.assign(Object.assign({ display: 'flex', flexDirection: 'column', width: 'fit-content', borderRadius: '1rem', border: '2px solid' }, style), rendering);
     return createPortal(_jsxs("div", { className: className, style: CardStyle, ref: modal, slot: 'card', children: [_jsx(Header, { icon: icon, title: title, desc: desc }), children] }), layer);
 };
 Content.displayName = 'Modal.Content';

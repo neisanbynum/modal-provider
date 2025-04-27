@@ -54,7 +54,7 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 }
 
 const Content: typeof Modal.Content = ({ children, className, style, icon, title, desc }) => {
-	const { layer, modal } = useModalContext()
+	const { rendering, layer, modal } = useModalContext()
 
 	const CardStyle: typeof style = {
 		display: 'flex',
@@ -62,7 +62,8 @@ const Content: typeof Modal.Content = ({ children, className, style, icon, title
 		width: 'fit-content',
 		borderRadius: '1rem',
 		border: '2px solid',
-		...style
+		...style,
+		...rendering
 	}
 
 	return createPortal(

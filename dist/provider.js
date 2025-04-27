@@ -7,6 +7,7 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
     const layer = usePortalLayer();
     const portal = React.useRef(null);
     const [opened, setOpened] = React.useState(manuallyOpened !== null && manuallyOpened !== void 0 ? manuallyOpened : false);
+    const [rendering, setRendering] = React.useState({});
     React.useEffect(() => {
         if (manuallyOpened)
             open();
@@ -17,7 +18,7 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
         if (node) {
             node.inert = false;
             node.ariaHidden = 'false';
-            node.style.opacity = '1';
+            setRendering(Object.assign(Object.assign({}, rendering), { opacity: 1 }));
         }
         setOpened(true);
     };
@@ -27,7 +28,7 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
         if (node) {
             node.inert = true;
             node.ariaHidden = 'true';
-            node.style.opacity = '0';
+            setRendering(Object.assign(Object.assign({}, rendering), { opacity: 0 }));
         }
         setOpened(false);
     };
@@ -48,13 +49,13 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
         portal.current = node;
         const update = () => {
             const position = positioner.position(node.getBoundingClientRect());
-            node.style.top = `${position.top}px`;
-            node.style.left = `${position.left}px`;
+            setRendering(Object.assign(Object.assign({}, rendering), { position: 'fixed', top: position.top, left: position.left }));
         };
         const handleRootClick = (e) => {
             if (closer !== 'button' && closer !== 'none' && e.target === layer)
                 close();
         };
+        close();
         update();
         layer.addEventListener('click', handleRootClick);
         const rootObserver = new ResizeObserver(update);
@@ -67,7 +68,7 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
             nodeObserver.disconnect();
         };
     }, []);
-    return _jsx(ModalContext.Provider, { value: { layer, opened, open, close, trigger, modal }, children: children });
+    return _jsx(ModalContext.Provider, { value: { rendering, layer, opened, open, close, trigger, modal }, children: children });
 };
 ModalProvider.displayName = 'ModalProvider';
 export default ModalProvider;

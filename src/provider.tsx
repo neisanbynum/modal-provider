@@ -15,6 +15,7 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 	const portal = React.useRef<HTMLDivElement>(null)
 
 	const [opened, setOpened] = React.useState<boolean>(manuallyOpened ?? false)
+	const [rendering, setRendering] = React.useState<React.CSSProperties>({})
 
 	React.useEffect(() => {
 		if (manuallyOpened) open()
@@ -27,7 +28,7 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 		if (node) {
 			node.inert = false
 			node.ariaHidden = 'false'
-			node.style.opacity = '1'
+			setRendering({ ...rendering, opacity: 1 })
 		}
 
 		setOpened(true)
@@ -39,7 +40,7 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 		if (node) {
 			node.inert = true
 			node.ariaHidden = 'true'
-			node.style.opacity = '0'
+			setRendering({ ...rendering, opacity: 0 })
 		}
 
 		setOpened(false)
@@ -68,14 +69,14 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 		const update = () => {
 			const position = positioner.position(node.getBoundingClientRect())
 
-			node.style.top = `${position.top}px`
-			node.style.left = `${position.left}px`
+			setRendering({ ...rendering, position: 'fixed', top: position.top, left: position.left })
 		}
 
 		const handleRootClick = (e: MouseEvent) => {
 			if (closer !== 'button' && closer !== 'none' && e.target === layer) close()
 		}
 
+		close()
 		update()
 
 		layer.addEventListener('click', handleRootClick)
@@ -92,7 +93,7 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 		}
 	}, [])
 
-	return <ModalContext.Provider value={{ layer, opened, open, close, trigger, modal }}>{children}</ModalContext.Provider>
+	return <ModalContext.Provider value={{ rendering, layer, opened, open, close, trigger, modal }}>{children}</ModalContext.Provider>
 }
 ModalProvider.displayName = 'ModalProvider'
 

@@ -1,0 +1,47 @@
+{
+  "name": "modal-provider",
+  "version": "1.0.0",
+  "description": "A lightweight modal provider",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neisanbynum/modal-provider.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/neisanbynum/modal-provider/issues"
+  },
+  "homepage": "https://github.com/neisanbynum/modal-provider#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "eslint": "^9.25.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
+  },
+  "dependencies": {
+    "dom-rect-calculator": "github:neisanbynum/dom-rect-calculator",
+    "lucide-react": "^0.503.0",
+    "portal-layer": "github:neisanbynum/portal-layer"
+  }
+}

@@ -1,4 +1,4 @@
-import { ModalHeaderProperties } from "@/types"
+import { ModalHeaderProperties } from "../types"
 import { cn } from "@sglara/cn"
 import { X } from "lucide-react"
 import { useModalContext } from "./context"

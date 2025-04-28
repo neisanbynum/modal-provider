@@ -1,10 +1,10 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import ModalPositioner from '@/utils/positioner';
-import usePortal from '@/utils/usePortal';
+import ModalPositioner from '../utils/positioner';
+import usePortal from '../utils/usePortal';
 import { Portal, usePortalLayer } from 'portal-layer';
 import React from 'react';
 import { cn } from '@sglara/cn';
-import Header from '@/modal/header';
+import Header from '../modal/header';
 import { createPortal } from 'react-dom';
 const useModal = () => {
     // Using Object.assign due to later intergration of modal.confirm

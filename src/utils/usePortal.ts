@@ -1,5 +1,5 @@
 import React from 'react'
-import { Closer, Coordinates, Thunk, usePortalValues } from '@/types'
+import { Closer, Coordinates, Thunk, usePortalValues } from '../types'
 import ModalPositioner from './positioner'
 
 const usePortal: Thunk<[HTMLElement, Closer, ModalPositioner], usePortalValues> = (layer, closer, positioner) => {

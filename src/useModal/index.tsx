@@ -1,10 +1,10 @@
-import { useModalComponent, useModelHook } from '@/types'
-import ModalPositioner from '@/utils/positioner'
-import usePortal from '@/utils/usePortal'
+import { useModalComponent, useModelHook } from '../types'
+import ModalPositioner from '../utils/positioner'
+import usePortal from '../utils/usePortal'
 import { Portal, usePortalLayer } from 'portal-layer'
 import React from 'react'
 import { cn } from '@sglara/cn'
-import Header from '@/modal/header'
+import Header from '../modal/header'
 import { createPortal } from 'react-dom'
 
 const useModal: useModelHook = () => {

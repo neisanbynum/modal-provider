@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import ModalPositioner from "@/utils/positioner";
-import usePortal from "@/utils/usePortal";
-import useTrigger from "@/utils/useTrigger";
+import ModalPositioner from "../utils/positioner";
+import usePortal from "../utils/usePortal";
+import useTrigger from "../utils/useTrigger";
 import { usePortalLayer } from "portal-layer";
 import React from "react";
 import { ModalContext } from "./context";

@@ -1,4 +1,4 @@
-import { ModalComponent } from "@/types"
+import { ModalComponent } from "../types"
 import { cn } from "@sglara/cn"
 import { Portal } from "portal-layer"
 import React from "react"

@@ -1,4 +1,4 @@
-import { Coordinates, ModalOptions, ModalPlacement, Thunk } from '@/types';
+import { Coordinates, ModalOptions, ModalPlacement, Thunk } from '../types';
 export default class ModalPositioner {
     private _root;
     private _modal;

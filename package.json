@@ -22,7 +22,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/neisanbynum/modal-provider/issues"
   },
@@ -42,7 +41,7 @@
   "dependencies": {
     "dom-rect-calculator": "github:neisanbynum/dom-rect-calculator",
     "lucide-react": "^0.503.0",
-    "portal-layer": "github.com/neisanbynum/portal-layer"
+    "portal-layer": "github:neisanbynum/portal-layer"
   },
   "peerDependencies": {
     "react": ">=17.0.0",

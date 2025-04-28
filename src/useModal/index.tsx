@@ -5,6 +5,7 @@ import { Portal, usePortalLayer } from 'portal-layer'
 import React from 'react'
 import { cn } from '@sglara/cn'
 import Header from '@/modal/header'
+import { createPortal } from 'react-dom'
 
 const useModal = () => {
 	// Using Object.assign due to later intergration of modal.confirm
@@ -20,8 +21,8 @@ const modal: useModalComponent = (
 
 	const { opened, positioning, open, close, modal } = usePortal(layer, closer, positioner)
 
-	const component = () => {
-		return (
+	const ModalComponent = () => {
+		return createPortal(
 			<Portal>
 				<div
 					className={cn(
@@ -38,11 +39,12 @@ const modal: useModalComponent = (
 					<Header icon={icon} title={title} desc={desc} />
 					{children}
 				</div>
-			</Portal>
+			</Portal>,
+			layer
 		)
 	}
 
-	return Object.assign(component, {open, close})
+	return Object.assign(ModalComponent, { open, close })
 }
 
 export default useModal

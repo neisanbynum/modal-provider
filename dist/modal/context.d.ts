@@ -1,3 +1,4 @@
 import React from "react";
-export declare const ModalContext: React.Context<any>;
-export declare const useModalContext: () => any;
+import { ModalContextValues } from "@/types";
+export declare const ModalContext: React.Context<ModalContextValues | null>;
+export declare const useModalContext: () => ModalContextValues;

@@ -54,7 +54,7 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
             nodeObserver.disconnect();
         };
     }, []);
-    return (_jsx(ModalContext.Provider, { value: { positioning, layer, opened, open, close, trigger, modal }, children: children }));
+    return (_jsx(ModalContext.Provider, { value: { positioning, closer, opened, open, close, trigger, modal }, children: children }));
 };
 ModalProvider.displayName = 'ModalProvider';
 export default ModalProvider;

@@ -10,11 +10,12 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-import { createPortal } from 'react-dom';
+import { Portal } from 'portal-layer';
 import { useModalContext } from './context';
 import ModalProvider from './provider';
 import React from 'react';
 import { X } from 'lucide-react';
+import { cn } from '@sglara/cn';
 const Modal = (_a) => {
     var { children } = _a, rest = __rest(_a, ["children"]);
     return _jsx(ModalProvider, Object.assign({}, rest, { children: children }));
@@ -26,21 +27,12 @@ const Trigger = ({ children }) => {
 Trigger.displayName = 'Modal.Trigger';
 Modal.Trigger = Trigger;
 const Header = ({ icon, title, desc }) => {
-    const { close } = useModalContext();
-    const styles = {
-        header: { display: 'flex', width: '100%', gap: '0.5rem', padding: '1rem' },
-        iconContainer: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
-        separator: { display: 'flex', width: 0, height: '100%', outline: '1px solid' },
-        content: { display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'start' },
-        title: { fontSize: '1.25rem', fontWeight: 'bold' },
-        desc: { fontSize: '1rem' }
-    };
-    return (_jsxs("div", { style: styles.header, children: [icon && (_jsxs(_Fragment, { children: [_jsx("div", { style: styles.iconContainer, children: _jsx(icon.icon, { className: icon.className, style: { width: '2rem', height: '2rem' } }) }), _jsx("div", { style: styles.separator })] })), _jsxs("div", { style: styles.content, children: [title && _jsx("span", { style: styles.title, children: title }), desc && _jsx("span", { style: styles.desc, children: desc })] }), _jsx("div", { style: Object.assign(Object.assign({}, styles.iconContainer), { alignItems: 'start' }), children: _jsx("button", { onClick: close, children: _jsx(X, { style: { width: '1rem', height: '1rem' } }) }) })] }));
+    const { close, closer } = useModalContext();
+    return (_jsxs("div", { className: 'flex w-full gap-2', children: [icon && (_jsxs(_Fragment, { children: [_jsx("div", { className: 'flex justify-center items-center', children: _jsx(icon.icon, { className: cn(icon.className, 'w-8 h-8') }) }), _jsx("div", { className: 'h-full border-x dark:border-slate-700' })] })), _jsxs("div", { className: 'flex flex-col w-full items-start', children: [title && _jsx("span", { className: 'text-lg font-semibold', children: title }), desc && _jsx("span", { className: 'text-muted text-sm', children: desc })] }), closer !== 'none' && (_jsx("div", { className: 'flex justify-start items-center', children: _jsx("button", { onClick: close, className: 'cursor-pointer disabled:cursor-default touch-manipulation select-none disabled:opacity-50', children: _jsx(X, { className: 'w-5 h-5' }) }) }))] }));
 };
-const Content = ({ children, className, style, icon, title, desc }) => {
-    const { positioning, opened, layer, modal } = useModalContext();
-    const CardStyle = Object.assign(Object.assign({ display: 'flex', flexDirection: 'column', width: 'fit-content', borderRadius: '1rem', border: '2px solid', position: 'fixed', zIndex: 100, opacity: opened ? 1 : 0, pointerEvents: 'auto' }, style), positioning);
-    return createPortal(_jsxs("div", { className: className, style: CardStyle, ref: modal, inert: !opened, "aria-hidden": !opened, slot: 'card', children: [_jsx(Header, { icon: icon, title: title, desc: desc }), children] }), layer);
+const Content = ({ children, className, icon, title, desc }) => {
+    const { positioning, opened, modal } = useModalContext();
+    return (_jsx(Portal, { children: _jsxs("div", { className: cn('fixed flex flex-col w-fit border-2 border-card bg-card rounded-lg gap-2 p-4 z-100 pointer-events-auto', opened ? 'opacity-100' : 'opacity-0', className), style: positioning, ref: modal, inert: !opened, "aria-hidden": !opened, slot: 'card', children: [_jsx(Header, { icon: icon, title: title, desc: desc }), children] }) }));
 };
 Content.displayName = 'Modal.Content';
 Modal.Content = Content;

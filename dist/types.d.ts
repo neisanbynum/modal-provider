@@ -14,16 +14,17 @@ export type ModalOptions = {
     offset?: Partial<Coordinates>;
     margin?: number;
 };
+type Closer = "button" | "overlay" | "both" | "none";
 export type ModalProviderProperties = {
     children?: React.ReactNode;
     opened?: boolean;
-    closer?: 'button' | 'overlay' | 'both' | 'none';
+    closer?: Closer;
     placement?: ModalPlacement;
     options?: ModalOptions;
 };
 export type ModalContextValues = {
     positioning: Coordinates;
-    layer: HTMLDivElement;
+    closer: Closer;
     opened: boolean;
     open: Thunk;
     close: Thunk;
@@ -42,7 +43,7 @@ export type ModalComponent = React.FC<ModalProviderProperties> & {
     Trigger: React.FC<{
         children: React.ReactElement<any>;
     }>;
-    Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' | 'style'> & ModalHeaderProperties>;
+    Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className'> & ModalHeaderProperties>;
 };
 export type useModalOptions = ModalHeaderProperties & ModalOptions & Pick<ModalProviderProperties, 'placement' | 'closer'>;
 export type useConfirmModalOptions = Omit<useModalOptions, 'closer'> & {

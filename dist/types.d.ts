@@ -3,6 +3,9 @@ import React from "react";
 export type Thunk<Args extends unknown[] = never[], Return = void> = (...args: Args) => Return;
 export type HTMLProperties<T extends HTMLElement> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>;
 export type Icon = React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>;
+type ClassName = {
+    className?: React.HTMLAttributes<HTMLElement>['className'];
+};
 type Vertical = 'top' | 'center' | 'bottom';
 type Horizontal = 'left' | 'right';
 export type ModalPlacement = `${Vertical}-${Horizontal}` | 'center';
@@ -46,19 +49,18 @@ export type ModalHeaderProperties = {
         className?: React.SVGAttributes<SVGSVGElement>['className'];
     };
 };
+type ModalContentProperties = Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className'> & ModalHeaderProperties;
 export type ModalComponent = React.FC<ModalProviderProperties> & {
     Trigger: React.FC<{
         children: React.ReactElement<any>;
     }>;
-    Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className'> & ModalHeaderProperties>;
+    Content: React.FC<ModalContentProperties>;
 };
 export type useModalOptions = ModalHeaderProperties & ModalOptions & Pick<ModalProviderProperties, 'placement' | 'closer'>;
 export type useConfirmModalOptions = Omit<useModalOptions, 'closer'> & {
     resolve: Thunk<[boolean | PromiseLike<boolean>]>;
 };
-export type useModalComponent = Thunk<[React.ReactNode, useModalOptions & {
-    className: Pick<HTMLProperties<HTMLDivElement>, 'className'>;
-}], Thunk & {
+export type useModalComponent = Thunk<[React.ReactElement<unknown>, useModalOptions & ClassName], Thunk<[], React.ReactPortal> & {
     open: Thunk;
     close: Thunk;
 }>;

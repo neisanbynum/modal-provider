@@ -22,13 +22,13 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 
 	const open = () => {
 		const root = document.getElementById('root')
-		if (root) root.inert = false
+		if (root) root.inert = true
 		layer.style.background = 'rgba(0, 0, 0, 0.75)'
 		setOpened(true)
 	}
 	const close = () => {
 		const root = document.getElementById('root')
-		if (root) root.inert = true
+		if (root) root.inert = false
 		layer.style.background = 'transparent'
 		setOpened(false)
 	}

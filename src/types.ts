@@ -17,13 +17,22 @@ export type ModalOptions = {
 }
 
 // For Modal Provider
-type Closer = "button" | "overlay" | "both" | "none"
+export type Closer = "button" | "overlay" | "both" | "none"
 export type ModalProviderProperties = {
 	children?: React.ReactNode
 	opened?: boolean
 	closer?: Closer
 	placement?: ModalPlacement
 	options?: ModalOptions
+}
+
+// For usePortal
+export type usePortalValues = {
+	opened: boolean
+	positioning: Coordinates
+	open: Thunk
+	close: Thunk
+	modal: React.Ref<HTMLDivElement>
 }
 
 // For Modal Context
@@ -33,7 +42,7 @@ export type ModalContextValues = {
 	opened: boolean
 	open: Thunk
 	close: Thunk
-	trigger: React.Ref<HTMLDivElement>
+	trigger: React.Ref<HTMLElement>
 	modal: React.Ref<HTMLDivElement>
 }
 
@@ -51,6 +60,4 @@ export type ModalComponent = React.FC<ModalProviderProperties> & {
 // For useModal
 export type useModalOptions = ModalHeaderProperties & ModalOptions & Pick<ModalProviderProperties, 'placement' | 'closer'>
 export type useConfirmModalOptions = Omit<useModalOptions, 'closer'> & { resolve: Thunk<[boolean | PromiseLike<boolean>]>}
-export type useModalComponent = Thunk<[React.ReactNode, useModalOptions], React.ReactElement<ModalProviderProperties>> & {
-	confirm: Thunk<[React.ReactNode, useConfirmModalOptions], Promise<boolean>>
-}
+export type useModalComponent = Thunk<[React.ReactNode, useModalOptions & { className: Pick<HTMLProperties<HTMLDivElement>, 'className'>}], Thunk & {open: Thunk, close: Thunk}>

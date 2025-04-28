@@ -14,7 +14,7 @@ export type ModalOptions = {
     offset?: Partial<Coordinates>;
     margin?: number;
 };
-type Closer = "button" | "overlay" | "both" | "none";
+export type Closer = "button" | "overlay" | "both" | "none";
 export type ModalProviderProperties = {
     children?: React.ReactNode;
     opened?: boolean;
@@ -22,13 +22,20 @@ export type ModalProviderProperties = {
     placement?: ModalPlacement;
     options?: ModalOptions;
 };
+export type usePortalValues = {
+    opened: boolean;
+    positioning: Coordinates;
+    open: Thunk;
+    close: Thunk;
+    modal: React.Ref<HTMLDivElement>;
+};
 export type ModalContextValues = {
     positioning: Coordinates;
     closer: Closer;
     opened: boolean;
     open: Thunk;
     close: Thunk;
-    trigger: React.Ref<HTMLDivElement>;
+    trigger: React.Ref<HTMLElement>;
     modal: React.Ref<HTMLDivElement>;
 };
 export type ModalHeaderProperties = {
@@ -49,7 +56,10 @@ export type useModalOptions = ModalHeaderProperties & ModalOptions & Pick<ModalP
 export type useConfirmModalOptions = Omit<useModalOptions, 'closer'> & {
     resolve: Thunk<[boolean | PromiseLike<boolean>]>;
 };
-export type useModalComponent = Thunk<[React.ReactNode, useModalOptions], React.ReactElement<ModalProviderProperties>> & {
-    confirm: Thunk<[React.ReactNode, useConfirmModalOptions], Promise<boolean>>;
-};
+export type useModalComponent = Thunk<[React.ReactNode, useModalOptions & {
+    className: Pick<HTMLProperties<HTMLDivElement>, 'className'>;
+}], Thunk & {
+    open: Thunk;
+    close: Thunk;
+}>;
 export {};

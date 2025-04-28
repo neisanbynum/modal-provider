@@ -1,5 +1,5 @@
 import { RectCalculator } from 'dom-rect-calculator'
-import { Coordinates, ModalOptions, ModalPlacement, Thunk } from './types'
+import { Coordinates, ModalOptions, ModalPlacement, Thunk } from '@/types'
 
 export default class ModalPositioner {
 	private _root: DOMRect = new DOMRect()

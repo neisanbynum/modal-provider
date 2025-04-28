@@ -43,7 +43,7 @@ export type ModalHeaderProperties = {
 	icon?: { icon: Icon, className?: React.SVGAttributes<SVGSVGElement>['className'] }
 }
 export type ModalComponent = React.FC<ModalProviderProperties> & {
-	Trigger: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children'>>
+	Trigger: React.FC<{ children: React.ReactElement<any> }>
 	Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' | 'style'> & ModalHeaderProperties>
 }
 

@@ -1,6 +1,6 @@
 import { usePortalLayer } from 'portal-layer'
 import React from 'react'
-import { Coordinates, ModalProviderProperties } from './types'
+import { Coordinates, ModalProviderProperties, Thunk } from './types'
 import ModalPositioner from './positioner'
 import { ModalContext } from './context'
 
@@ -21,10 +21,13 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 	}, [manuallyOpened])
 
 	const open = () => {
+		document.documentElement.inert = true
 		layer.style.background = 'rgba(0, 0, 0, 0.5)'
 		setOpened(true)
 	}
-	const close = () => {
+	const close: Thunk<[MouseEvent?]> = (e) => {
+		if (e) e.stopPropagation()
+		document.documentElement.inert = false
 		layer.style.background = 'transparent'
 		setOpened(false)
 	}
@@ -50,7 +53,7 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 		const update = () => setPositioning(positioner.position(node.getBoundingClientRect()))
 
 		const handleRootClick = (e: MouseEvent) => {
-			if (closer !== 'button' && closer !== 'none' && e.target === layer) close()
+			if (closer !== 'button' && closer !== 'none' && e.target !== node) close()
 		}
 
 		update()

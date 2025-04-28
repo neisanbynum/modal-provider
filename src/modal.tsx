@@ -12,7 +12,7 @@ const Modal: ModalComponent = ({ children, ...rest }) => {
 const Trigger: typeof Modal.Trigger = ({ children }) => {
 	const { trigger } = useModalContext()
 
-	return <div ref={trigger}>{children}</div>
+	return React.cloneElement(children, { ref: trigger })
 }
 Trigger.displayName = 'Modal.Trigger'
 Modal.Trigger = Trigger
@@ -25,7 +25,6 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 		iconContainer: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
 		separator: { display: 'flex', width: 0, height: '100%', outline: '1px solid' },
 		content: { display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'start' },
-		icon: { width: '1rem', height: '1rem' },
 		title: { fontSize: '1.25rem', fontWeight: 'bold' },
 		desc: { fontSize: '1rem' }
 	}
@@ -35,7 +34,7 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 			{icon && (
 				<>
 					<div style={styles.iconContainer}>
-						<icon.icon className={icon.className} style={styles.icon} />
+						<icon.icon className={icon.className} style={{ width: '2rem', height: '2rem' }} />
 					</div>
 					<div style={styles.separator} />
 				</>
@@ -44,9 +43,9 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 				{title && <span style={styles.title}>{title}</span>}
 				{desc && <span style={styles.desc}>{desc}</span>}
 			</div>
-			<div style={styles.iconContainer}>
+			<div style={{...styles.iconContainer, alignItems: 'start'}}>
 				<button onClick={close}>
-					<X style={styles.icon} />
+					<X style={{ width: '1rem', height: '1rem' }} />
 				</button>
 			</div>
 		</div>
@@ -65,6 +64,7 @@ const Content: typeof Modal.Content = ({ children, className, style, icon, title
 		position: 'fixed',
 		zIndex: 100,
 		opacity: opened ? 1 : 0,
+		pointerEvents: 'auto',
 		...style,
 		...positioning
 	}

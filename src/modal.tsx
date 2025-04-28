@@ -21,7 +21,7 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 	const { close } = useModalContext()
 
 	const styles: Record<string, React.CSSProperties> = {
-		header: { display: 'flex', width: '100%', gap: '0.5rem', padding: '1rem' },
+		header: { display: 'flex', width: '100%', gap: '0.5rem' },
 		iconContainer: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
 		separator: { display: 'flex', width: 0, height: '100%', outline: '1px solid' },
 		content: { display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'start' },
@@ -44,7 +44,7 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 				{desc && <span style={styles.desc}>{desc}</span>}
 			</div>
 			<div style={{ ...styles.iconContainer, alignItems: 'start' }}>
-				<button onClick={close}>
+				<button onClick={close} style={{ cursor: 'pointer' }}>
 					<X style={{ width: '1rem', height: '1rem' }} />
 				</button>
 			</div>
@@ -55,23 +55,30 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 const Content: typeof Modal.Content = ({ children, className, style, icon, title, desc }) => {
 	const { positioning, opened, modal } = useModalContext()
 
-	const CardStyle: typeof style = {
-		...style,
-		...positioning,
-		display: 'flex',
-		flexDirection: 'column',
-		width: 'fit-content',
-		borderRadius: '1rem',
-		border: '2px solid',
-		position: 'fixed',
-		zIndex: 100,
-		opacity: opened ? 1 : 0,
-		pointerEvents: 'auto'
-	}
-
 	return (
 		<Portal>
-			<div className={className} style={CardStyle} ref={modal} inert={!opened} aria-hidden={!opened} slot='card'>
+			<div
+				className={className}
+				style={{
+					...style,
+					...positioning,
+					display: 'flex',
+					flexDirection: 'column',
+					width: 'fit-content',
+					borderRadius: '1rem',
+					border: '2px solid',
+					gap: '0.5rem',
+					padding: '1rem',
+					position: 'fixed',
+					zIndex: 100,
+					opacity: opened ? 1 : 0,
+					pointerEvents: 'auto'
+				}}
+				ref={modal}
+				inert={!opened}
+				aria-hidden={!opened}
+				slot='card'
+			>
 				<Header icon={icon} title={title} desc={desc} />
 				{children}
 			</div>

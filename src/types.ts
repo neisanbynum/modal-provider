@@ -17,10 +17,11 @@ export type ModalOptions = {
 }
 
 // For Modal Provider
+type Closer = "button" | "overlay" | "both" | "none"
 export type ModalProviderProperties = {
 	children?: React.ReactNode
 	opened?: boolean
-	closer?: 'button' | 'overlay' | 'both' | 'none'
+	closer?: Closer
 	placement?: ModalPlacement
 	options?: ModalOptions
 }
@@ -28,6 +29,7 @@ export type ModalProviderProperties = {
 // For Modal Context
 export type ModalContextValues = {
 	positioning: Coordinates
+	closer: Closer
 	opened: boolean
 	open: Thunk
 	close: Thunk
@@ -43,7 +45,7 @@ export type ModalHeaderProperties = {
 }
 export type ModalComponent = React.FC<ModalProviderProperties> & {
 	Trigger: React.FC<{ children: React.ReactElement<any> }>
-	Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' | 'style'> & ModalHeaderProperties>
+	Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' > & ModalHeaderProperties>
 }
 
 // For useModal

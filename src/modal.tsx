@@ -4,6 +4,7 @@ import ModalProvider from './provider'
 import { ModalComponent, ModalHeaderProperties } from './types'
 import React from 'react'
 import { X } from 'lucide-react'
+import { cn } from '@sglara/cn'
 
 const Modal: ModalComponent = ({ children, ...rest }) => {
 	return <ModalProvider {...rest}>{children}</ModalProvider>
@@ -18,62 +19,48 @@ Trigger.displayName = 'Modal.Trigger'
 Modal.Trigger = Trigger
 
 const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
-	const { close } = useModalContext()
-
-	const styles: Record<string, React.CSSProperties> = {
-		header: { display: 'flex', width: '100%', gap: '0.5rem' },
-		iconContainer: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
-		separator: { display: 'flex', width: 0, height: '100%', outline: '1px solid' },
-		content: { display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'start' },
-		title: { fontSize: '1.25rem', fontWeight: 'bold' },
-		desc: { fontSize: '1rem' }
-	}
+	const { close, closer } = useModalContext()
 
 	return (
-		<div style={styles.header}>
+		<div className='flex w-full gap-2'>
 			{icon && (
 				<>
-					<div style={styles.iconContainer}>
-						<icon.icon className={icon.className} style={{ width: '2rem', height: '2rem' }} />
+					<div className='flex justify-center items-center'>
+						<icon.icon className={cn(icon.className, 'w-8 h-8')} />
 					</div>
-					<div style={styles.separator} />
+					<div className='h-full border-x dark:border-slate-700' />
 				</>
 			)}
-			<div style={styles.content}>
-				{title && <span style={styles.title}>{title}</span>}
-				{desc && <span style={styles.desc}>{desc}</span>}
+			<div className='flex flex-col w-full items-start'>
+				{title && <span className='text-lg font-semibold'>{title}</span>}
+				{desc && <span className='text-muted text-sm'>{desc}</span>}
 			</div>
-			<div style={{ ...styles.iconContainer, alignItems: 'start' }}>
-				<button onClick={close} style={{ cursor: 'pointer' }}>
-					<X style={{ width: '1rem', height: '1rem' }} />
-				</button>
-			</div>
+			{closer !== 'none' && (
+				<div className='flex justify-start items-center'>
+					<button
+						onClick={close}
+						className='cursor-pointer disabled:cursor-default touch-manipulation select-none disabled:opacity-50'
+					>
+						<X className='w-5 h-5' />
+					</button>
+				</div>
+			)}
 		</div>
 	)
 }
 
-const Content: typeof Modal.Content = ({ children, className, style, icon, title, desc }) => {
+const Content: typeof Modal.Content = ({ children, className, icon, title, desc }) => {
 	const { positioning, opened, modal } = useModalContext()
 
 	return (
 		<Portal>
 			<div
-				className={className}
-				style={{
-					...style,
-					...positioning,
-					display: 'flex',
-					flexDirection: 'column',
-					width: 'fit-content',
-					borderRadius: '1rem',
-					border: '2px solid',
-					gap: '0.5rem',
-					padding: '1rem',
-					position: 'fixed',
-					zIndex: 100,
-					opacity: opened ? 1 : 0,
-					pointerEvents: 'auto'
-				}}
+				className={cn(
+					'fixed flex flex-col w-fit border-2 border-card bg-card rounded-lg gap-2 p-4 z-100 pointer-events-auto',
+					opened ? 'opacity-100' : 'opacity-0',
+					className
+				)}
+				style={positioning}
 				ref={modal}
 				inert={!opened}
 				aria-hidden={!opened}

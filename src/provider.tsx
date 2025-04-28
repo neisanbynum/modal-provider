@@ -73,7 +73,7 @@ const ModalProvider: React.FC<ModalProviderProperties> = ({
 	}, [])
 
 	return (
-		<ModalContext.Provider value={{ positioning, opened, open, close, trigger, modal }}>
+		<ModalContext.Provider value={{ positioning, closer, opened, open, close, trigger, modal }}>
 			{children}
 		</ModalContext.Provider>
 	)

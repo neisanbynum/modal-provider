@@ -12,10 +12,16 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
             open();
     }, [manuallyOpened]);
     const open = () => {
-        layer.style.background = 'rgba(0, 0, 0, 0.5)';
+        const root = document.getElementById('root');
+        if (root)
+            root.inert = false;
+        layer.style.background = 'rgba(0, 0, 0, 0.75)';
         setOpened(true);
     };
     const close = () => {
+        const root = document.getElementById('root');
+        if (root)
+            root.inert = true;
         layer.style.background = 'transparent';
         setOpened(false);
     };

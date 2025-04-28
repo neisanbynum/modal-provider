@@ -64,4 +64,7 @@ export type useModalComponent = Thunk<[React.ReactElement<unknown>, useModalOpti
     open: Thunk;
     close: Thunk;
 }>;
+export type useModel = Thunk<[], {
+    modal: useModalComponent;
+}>;
 export {};

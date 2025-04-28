@@ -7,5 +7,6 @@ export type {
 	ModalComponent,
 	useModalComponent,
 	useModalOptions,
-	useConfirmModalOptions
+	useConfirmModalOptions,
+	useModel
 } from './types'

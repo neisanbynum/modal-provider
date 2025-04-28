@@ -63,3 +63,4 @@ export type ModalComponent = React.FC<ModalProviderProperties> & {
 export type useModalOptions = ModalHeaderProperties & ModalOptions & Pick<ModalProviderProperties, 'placement' | 'closer'>
 export type useConfirmModalOptions = Omit<useModalOptions, 'closer'> & { resolve: Thunk<[boolean | PromiseLike<boolean>]>}
 export type useModalComponent = Thunk<[React.ReactElement<unknown>, useModalOptions & ClassName], Thunk<[], React.ReactPortal> & {open: Thunk, close: Thunk}>
+export type useModel = Thunk<[],{ modal: useModalComponent }>

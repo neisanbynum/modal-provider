@@ -1,4 +1,4 @@
-import { useModalComponent } from '@/types'
+import { useModalComponent, useModel } from '@/types'
 import ModalPositioner from '@/utils/positioner'
 import usePortal from '@/utils/usePortal'
 import { Portal, usePortalLayer } from 'portal-layer'
@@ -7,7 +7,7 @@ import { cn } from '@sglara/cn'
 import Header from '@/modal/header'
 import { createPortal } from 'react-dom'
 
-const useModal = () => {
+const useModal: useModel = () => {
 	// Using Object.assign due to later intergration of modal.confirm
 	return { modal }
 }

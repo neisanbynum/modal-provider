@@ -9,7 +9,7 @@ import { createPortal } from 'react-dom'
 
 const useModal: useModelHook = () => {
 	// Using Object.assign due to later intergration of modal.confirm
-	return { modal }
+	return { modal } as const
 }
 
 const modal: useModalComponent = (

@@ -5,31 +5,22 @@ import ModalPositioner from './positioner';
 import { ModalContext } from './context';
 const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', placement = 'center', options }) => {
     const layer = usePortalLayer();
-    const portal = React.useRef(null);
     const [opened, setOpened] = React.useState(manuallyOpened !== null && manuallyOpened !== void 0 ? manuallyOpened : false);
-    const [rendering, setRendering] = React.useState({});
+    const [positioning, setPositioning] = React.useState({ top: 0, left: 0 });
     React.useEffect(() => {
         if (manuallyOpened)
             open();
     }, [manuallyOpened]);
     const open = () => {
+        document.documentElement.inert = true;
         layer.style.background = 'rgba(0, 0, 0, 0.5)';
-        const node = portal.current;
-        if (node) {
-            node.inert = false;
-            node.ariaHidden = 'false';
-            setRendering(Object.assign(Object.assign({}, rendering), { opacity: 1 }));
-        }
         setOpened(true);
     };
-    const close = () => {
+    const close = (e) => {
+        if (e)
+            e.stopPropagation();
+        document.documentElement.inert = false;
         layer.style.background = 'transparent';
-        const node = portal.current;
-        if (node) {
-            node.inert = true;
-            node.ariaHidden = 'true';
-            setRendering(Object.assign(Object.assign({}, rendering), { opacity: 0 }));
-        }
         setOpened(false);
     };
     const trigger = React.useCallback((node) => {
@@ -46,16 +37,11 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
     const modal = React.useCallback((node) => {
         if (!node)
             return;
-        portal.current = node;
-        const update = () => {
-            const position = positioner.position(node.getBoundingClientRect());
-            setRendering(Object.assign(Object.assign({}, rendering), { position: 'fixed', top: position.top, left: position.left }));
-        };
+        const update = () => setPositioning(positioner.position(node.getBoundingClientRect()));
         const handleRootClick = (e) => {
-            if (closer !== 'button' && closer !== 'none' && e.target === layer)
+            if (closer !== 'button' && closer !== 'none' && e.target !== node)
                 close();
         };
-        close();
         update();
         layer.addEventListener('click', handleRootClick);
         const rootObserver = new ResizeObserver(update);
@@ -68,7 +54,7 @@ const ModalProvider = ({ children, opened: manuallyOpened, closer = 'button', pl
             nodeObserver.disconnect();
         };
     }, []);
-    return _jsx(ModalContext.Provider, { value: { rendering, layer, opened, open, close, trigger, modal }, children: children });
+    return (_jsx(ModalContext.Provider, { value: { positioning, layer, opened, open, close, trigger, modal }, children: children }));
 };
 ModalProvider.displayName = 'ModalProvider';
 export default ModalProvider;

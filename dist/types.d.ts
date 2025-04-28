@@ -22,7 +22,7 @@ export type ModalProviderProperties = {
     options?: ModalOptions;
 };
 export type ModalContextValues = {
-    rendering: React.CSSProperties;
+    positioning: Coordinates;
     layer: HTMLDivElement;
     opened: boolean;
     open: Thunk;
@@ -35,11 +35,13 @@ export type ModalHeaderProperties = {
     desc?: string;
     icon?: {
         icon: Icon;
-        className: React.SVGAttributes<SVGSVGElement>['className'];
+        className?: React.SVGAttributes<SVGSVGElement>['className'];
     };
 };
 export type ModalComponent = React.FC<ModalProviderProperties> & {
-    Trigger: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children'>>;
+    Trigger: React.FC<{
+        children: React.ReactElement<any>;
+    }>;
     Content: React.FC<Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' | 'style'> & ModalHeaderProperties>;
 };
 export type useModalOptions = ModalHeaderProperties & ModalOptions & Pick<ModalProviderProperties, 'placement' | 'closer'>;

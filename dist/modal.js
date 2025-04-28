@@ -13,6 +13,7 @@ import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-run
 import { createPortal } from 'react-dom';
 import { useModalContext } from './context';
 import ModalProvider from './provider';
+import React from 'react';
 import { X } from 'lucide-react';
 const Modal = (_a) => {
     var { children } = _a, rest = __rest(_a, ["children"]);
@@ -20,7 +21,7 @@ const Modal = (_a) => {
 };
 const Trigger = ({ children }) => {
     const { trigger } = useModalContext();
-    return _jsx("div", { ref: trigger, children: children });
+    return React.cloneElement(children, { ref: trigger });
 };
 Trigger.displayName = 'Modal.Trigger';
 Modal.Trigger = Trigger;
@@ -31,16 +32,15 @@ const Header = ({ icon, title, desc }) => {
         iconContainer: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
         separator: { display: 'flex', width: 0, height: '100%', outline: '1px solid' },
         content: { display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'start' },
-        icon: { width: '2rem', height: '2rem' },
-        title: { fontSize: '1.5rem', fontWeight: 'bold' },
+        title: { fontSize: '1.25rem', fontWeight: 'bold' },
         desc: { fontSize: '1rem' }
     };
-    return (_jsxs("div", { style: styles.header, children: [icon && (_jsxs(_Fragment, { children: [_jsx("div", { style: styles.iconContainer, children: _jsx(icon.icon, { className: icon.className, style: styles.icon }) }), _jsx("div", { style: styles.separator })] })), _jsxs("div", { style: styles.content, children: [title && _jsx("span", { style: styles.title, children: title }), desc && _jsx("span", { style: styles.desc, children: desc })] }), _jsx("div", { style: styles.iconContainer, children: _jsx("button", { onClick: close, children: _jsx(X, { style: styles.icon }) }) })] }));
+    return (_jsxs("div", { style: styles.header, children: [icon && (_jsxs(_Fragment, { children: [_jsx("div", { style: styles.iconContainer, children: _jsx(icon.icon, { className: icon.className, style: { width: '2rem', height: '2rem' } }) }), _jsx("div", { style: styles.separator })] })), _jsxs("div", { style: styles.content, children: [title && _jsx("span", { style: styles.title, children: title }), desc && _jsx("span", { style: styles.desc, children: desc })] }), _jsx("div", { style: Object.assign(Object.assign({}, styles.iconContainer), { alignItems: 'start' }), children: _jsx("button", { onClick: close, children: _jsx(X, { style: { width: '1rem', height: '1rem' } }) }) })] }));
 };
 const Content = ({ children, className, style, icon, title, desc }) => {
-    const { rendering, layer, modal } = useModalContext();
-    const CardStyle = Object.assign(Object.assign({ display: 'flex', flexDirection: 'column', width: 'fit-content', borderRadius: '1rem', border: '2px solid' }, style), rendering);
-    return createPortal(_jsxs("div", { className: className, style: CardStyle, ref: modal, slot: 'card', children: [_jsx(Header, { icon: icon, title: title, desc: desc }), children] }), layer);
+    const { positioning, opened, layer, modal } = useModalContext();
+    const CardStyle = Object.assign(Object.assign({ display: 'flex', flexDirection: 'column', width: 'fit-content', borderRadius: '1rem', border: '2px solid', position: 'fixed', zIndex: 100, opacity: opened ? 1 : 0, pointerEvents: 'auto' }, style), positioning);
+    return createPortal(_jsxs("div", { className: className, style: CardStyle, ref: modal, inert: !opened, "aria-hidden": !opened, slot: 'card', children: [_jsx(Header, { icon: icon, title: title, desc: desc }), children] }), layer);
 };
 Content.displayName = 'Modal.Content';
 Modal.Content = Content;

@@ -8,5 +8,5 @@ export type {
 	useModalComponent,
 	useModalOptions,
 	useConfirmModalOptions,
-	useModel
+	useModelHook
 } from './types'

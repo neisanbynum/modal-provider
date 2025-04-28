@@ -1,3 +1,3 @@
-import { useModel } from '@/types';
-declare const useModal: useModel;
+import { useModelHook } from '@/types';
+declare const useModal: useModelHook;
 export default useModal;

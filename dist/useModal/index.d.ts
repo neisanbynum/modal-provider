@@ -1,3 +1,5 @@
 import { useModalComponent } from '@/types';
-declare const useModal: () => useModalComponent;
+declare const useModal: () => {
+    modal: useModalComponent;
+};
 export default useModal;

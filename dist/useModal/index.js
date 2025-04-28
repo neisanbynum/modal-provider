@@ -8,7 +8,7 @@ import Header from '@/modal/header';
 import { createPortal } from 'react-dom';
 const useModal = () => {
     // Using Object.assign due to later intergration of modal.confirm
-    return modal;
+    return { modal };
 };
 const modal = (children, { className, title, desc, icon, offset, margin, closer = 'both', placement = 'center' }) => {
     const layer = usePortalLayer();

@@ -28,7 +28,6 @@ export type ModalProviderProperties = {
 // For Modal Context
 export type ModalContextValues = {
 	positioning: Coordinates
-	layer: HTMLDivElement
 	opened: boolean
 	open: Thunk
 	close: Thunk

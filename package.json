@@ -40,8 +40,12 @@
     "typescript-eslint": "^8.31.0"
   },
   "dependencies": {
-    "dom-rect-calculator": "github:neisanbynum/dom-rect-calculator",
+    "dom-rect-calculator": "git+https://github:neisanbynum/dom-rect-calculator.git",
     "lucide-react": "^0.503.0",
-    "portal-layer": "github:neisanbynum/portal-layer"
+    "portal-layer": "git+https://github.com/neisanbynum/portal-layer.git"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   }
 }

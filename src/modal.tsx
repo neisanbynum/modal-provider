@@ -1,4 +1,4 @@
-import { createPortal } from 'react-dom'
+import { Portal } from 'portal-layer'
 import { useModalContext } from './context'
 import ModalProvider from './provider'
 import { ModalComponent, ModalHeaderProperties } from './types'
@@ -43,7 +43,7 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 				{title && <span style={styles.title}>{title}</span>}
 				{desc && <span style={styles.desc}>{desc}</span>}
 			</div>
-			<div style={{...styles.iconContainer, alignItems: 'start'}}>
+			<div style={{ ...styles.iconContainer, alignItems: 'start' }}>
 				<button onClick={close}>
 					<X style={{ width: '1rem', height: '1rem' }} />
 				</button>
@@ -53,9 +53,11 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 }
 
 const Content: typeof Modal.Content = ({ children, className, style, icon, title, desc }) => {
-	const { positioning, opened, layer, modal } = useModalContext()
+	const { positioning, opened, modal } = useModalContext()
 
 	const CardStyle: typeof style = {
+		...style,
+		...positioning,
 		display: 'flex',
 		flexDirection: 'column',
 		width: 'fit-content',
@@ -64,17 +66,16 @@ const Content: typeof Modal.Content = ({ children, className, style, icon, title
 		position: 'fixed',
 		zIndex: 100,
 		opacity: opened ? 1 : 0,
-		pointerEvents: 'auto',
-		...style,
-		...positioning
+		pointerEvents: 'auto'
 	}
 
-	return createPortal(
-		<div className={className} style={CardStyle} ref={modal} inert={!opened} aria-hidden={!opened} slot='card'>
-			<Header icon={icon} title={title} desc={desc} />
-			{children}
-		</div>,
-		layer
+	return (
+		<Portal>
+			<div className={className} style={CardStyle} ref={modal} inert={!opened} aria-hidden={!opened} slot='card'>
+				<Header icon={icon} title={title} desc={desc} />
+				{children}
+			</div>
+		</Portal>
 	)
 }
 Content.displayName = 'Modal.Content'

@@ -15,8 +15,8 @@ importers:
         specifier: ^0.503.0
         version: 0.503.0(react@19.1.0)
       portal-layer:
-        specifier: github:neisanbynum/portal-layer
-        version: https://codeload.github.com/neisanbynum/portal-layer/tar.gz/720ad2ce9e5f9e246adbdf3a01c36215dad275c9
+        specifier: git+https://github.com/neisanbynum/portal-layer.git
+        version: https://codeload.github.com/neisanbynum/portal-layer/tar.gz/88113f6c3858b5cc174cb49bf4f1f649df9d7efb(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.25.1
@@ -784,9 +784,12 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  portal-layer@https://codeload.github.com/neisanbynum/portal-layer/tar.gz/720ad2ce9e5f9e246adbdf3a01c36215dad275c9:
-    resolution: {tarball: https://codeload.github.com/neisanbynum/portal-layer/tar.gz/720ad2ce9e5f9e246adbdf3a01c36215dad275c9}
-    version: 1.0.0
+  portal-layer@https://codeload.github.com/neisanbynum/portal-layer/tar.gz/88113f6c3858b5cc174cb49bf4f1f649df9d7efb:
+    resolution: {tarball: https://codeload.github.com/neisanbynum/portal-layer/tar.gz/88113f6c3858b5cc174cb49bf4f1f649df9d7efb}
+    version: 1.0.3
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
 
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
@@ -1931,7 +1934,10 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  portal-layer@https://codeload.github.com/neisanbynum/portal-layer/tar.gz/720ad2ce9e5f9e246adbdf3a01c36215dad275c9: {}
+  portal-layer@https://codeload.github.com/neisanbynum/portal-layer/tar.gz/88113f6c3858b5cc174cb49bf4f1f649df9d7efb(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   possible-typed-array-names@1.1.0: {}
 

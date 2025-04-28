@@ -9,7 +9,7 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Portal } from 'portal-layer';
 import { useModalContext } from './context';
 import ModalProvider from './provider';
@@ -28,7 +28,7 @@ Trigger.displayName = 'Modal.Trigger';
 Modal.Trigger = Trigger;
 const Header = ({ icon, title, desc }) => {
     const { close, closer } = useModalContext();
-    return (_jsxs("div", { className: 'flex w-full gap-2', children: [icon && (_jsxs(_Fragment, { children: [_jsx("div", { className: 'flex justify-center items-center', children: _jsx(icon.icon, { className: cn(icon.className, 'w-8 h-8') }) }), _jsx("div", { className: 'h-full border-x dark:border-slate-700' })] })), _jsxs("div", { className: 'flex flex-col w-full items-start', children: [title && _jsx("span", { className: 'text-lg font-semibold', children: title }), desc && _jsx("span", { className: 'text-muted text-sm', children: desc })] }), closer !== 'none' && (_jsx("div", { className: 'flex justify-start items-center', children: _jsx("button", { onClick: close, className: 'cursor-pointer disabled:cursor-default touch-manipulation select-none disabled:opacity-50', children: _jsx(X, { className: 'w-5 h-5' }) }) }))] }));
+    return (_jsxs("div", { className: 'flex w-full gap-2', children: [icon && (_jsx("div", { className: 'flex justify-center items-center', children: _jsx(icon.icon, { className: cn(icon.className, 'w-8 h-8') }) })), _jsxs("div", { className: 'flex flex-col w-full items-start', children: [title && _jsx("span", { className: 'text-lg font-semibold', children: title }), desc && _jsx("span", { className: 'text-muted text-sm', children: desc })] }), closer !== 'none' && (_jsx("div", { className: 'flex justify-center items-start', children: _jsx("button", { onClick: close, className: 'cursor-pointer disabled:cursor-default touch-manipulation select-none disabled:opacity-50', children: _jsx(X, { className: 'w-5 h-5' }) }) }))] }));
 };
 const Content = ({ children, className, icon, title, desc }) => {
     const { positioning, opened, modal } = useModalContext();

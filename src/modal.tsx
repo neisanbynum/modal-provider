@@ -24,19 +24,16 @@ const Header: React.FC<ModalHeaderProperties> = ({ icon, title, desc }) => {
 	return (
 		<div className='flex w-full gap-2'>
 			{icon && (
-				<>
-					<div className='flex justify-center items-center'>
-						<icon.icon className={cn(icon.className, 'w-8 h-8')} />
-					</div>
-					<div className='h-full border-x dark:border-slate-700' />
-				</>
+				<div className='flex justify-center items-center'>
+					<icon.icon className={cn(icon.className, 'w-8 h-8')} />
+				</div>
 			)}
 			<div className='flex flex-col w-full items-start'>
 				{title && <span className='text-lg font-semibold'>{title}</span>}
 				{desc && <span className='text-muted text-sm'>{desc}</span>}
 			</div>
 			{closer !== 'none' && (
-				<div className='flex justify-start items-center'>
+				<div className='flex justify-center items-start'>
 					<button
 						onClick={close}
 						className='cursor-pointer disabled:cursor-default touch-manipulation select-none disabled:opacity-50'

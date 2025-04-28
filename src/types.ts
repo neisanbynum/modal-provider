@@ -4,10 +4,10 @@ import React from "react"
 export type Thunk<Args extends unknown[] = never[], Return = void> = (...args: Args) => Return
 export type HTMLProperties<T extends HTMLElement> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
 export type Icon = React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>
-type ClassName = {className?: React.HTMLAttributes<HTMLElement>['className']}
+export type ClassName = {className?: React.HTMLAttributes<HTMLElement>['className']}
 
-type Vertical = 'top' | 'center' | 'bottom'
-type Horizontal = 'left' | 'right'
+export type Vertical = 'top' | 'center' | 'bottom'
+export type Horizontal = 'left' | 'right'
 export type ModalPlacement = `${Vertical}-${Horizontal}` | 'center'
 export type Coordinates = { top: number; left: number }
 
@@ -53,7 +53,7 @@ export type ModalHeaderProperties = {
 	desc?: string
 	icon?: { icon: Icon, className?: React.SVGAttributes<SVGSVGElement>['className'] }
 }
-type ModalContentProperties = Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' > & ModalHeaderProperties
+export type ModalContentProperties = Pick<HTMLProperties<HTMLDivElement>, 'children' | 'className' > & ModalHeaderProperties
 export type ModalComponent = React.FC<ModalProviderProperties> & {
 	Trigger: React.FC<{ children: React.ReactElement<any> }>
 	Content: React.FC<ModalContentProperties>
